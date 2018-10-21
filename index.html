@@ -12,6 +12,8 @@
       <button type="submit">Get Info</button>
     </form>
 
+    <p id="result"></p>
+
     <script>
       const electron = require('electron'); // require (commonJS module) no available in browser but is available when run in electron!
       const { ipcRenderer } = electron; // ipc = Inter-process communication
@@ -20,6 +22,10 @@
         event.preventDefault();
         const { path } = document.querySelector('input').files[0];
         ipcRenderer.send('video:submit', path);
+      });
+
+      ipcRenderer.on('video:duration', (event, duration) => {
+        document.querySelector('#result').innerHTML = `Video is ${duration} seconds long.`;
       });
     </script>
   </body>
