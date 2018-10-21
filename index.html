@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <title>Video Info</title>
+  </head>
+  <body>
+    <h1>Video Info</h1>
+    <form action="">
+      <div>
+        <label for="video">Select a video</label>
+        <input type="file" accept="video/*" name="video" />
+      </div>
+      <button type="submit">Get Info</button>
+    </form>
+
+    <script>
+      const electron = require('electron'); // require (commonJS module) no available in browser but is available when run in electron!
+      const { ipcRenderer } = electron; // ipc = Inter-process communication
+
+      document.querySelector('form').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const { path } = document.querySelector('input').files[0];
+        ipcRenderer.send('video:submit', path);
+      });
+    </script>
+  </body>
+</html>
